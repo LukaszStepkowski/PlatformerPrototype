@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private int extraJumps;
     public int extraJumpsValue;
 
+    private Animator animator;
 
     public Rigidbody2D rb;
 
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         extraJumps = extraJumpsValue;
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,12 @@ public class PlayerController : MonoBehaviour
 
         moveInput = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+
+        if (moveInput == 0)
+        {
+            animator.SetBool("isWalking", false);
+        }
+        else animator.SetBool("isWalking", true);
 
         if(facingRight == false && moveInput > 0)
         {
